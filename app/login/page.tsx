@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers, cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { PhoneNumberInput } from "../../components/PhoneNumberInput";
 
 export default function Login({
   searchParams,
@@ -123,11 +124,7 @@ export default function Login({
         <label className="text-md" htmlFor="phone">
           Phone Number
         </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="phone"
-          placeholder="Your Phone Number"
-        />
+        <PhoneNumberInput />
         <label className="text-md" htmlFor="password">
           Password
         </label>
