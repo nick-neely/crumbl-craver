@@ -1,56 +1,79 @@
-import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
+import Link from "next/link";
+import { headers, cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export default function Login({
   searchParams,
 }: {
-  searchParams: { message: string }
+  searchParams: { message: string };
 }) {
   const signIn = async (formData: FormData) => {
-    'use server'
+    "use server";
 
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
 
     if (error) {
-      return redirect('/login?message=Could not authenticate user')
+      return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect('/')
-  }
+    return redirect("/");
+  };
 
   const signUp = async (formData: FormData) => {
-    'use server'
+    "use server";
 
-    const origin = headers().get('origin')
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const origin = headers().get("origin");
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const displayName = formData.get("displayName") as string;
+    const phone = formData.get("phone") as string;
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    })
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${origin}/auth/callback`,
+          data: { displayName, phone: phone },
+        },
+      });
 
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
+      // After successful sign-up, do something else
+      if (data && data.user) {
+        // The user has been successfully signed up and the profile has been created in the `route.ts` file.
+        // You can do something else here, like redirecting the user to another page.
+      } else if (error) {
+        console.error("Signup error:", error);
+        // Handle the signup error
+        return redirect("/login?message=Could not complete sign up");
+      }
+    } catch (error) {
+      if (
+        (error as any).name === "AuthApiError" &&
+        (error as any).status === 400
+      ) {
+        // Handle the invalid refresh token error
+        console.error("Invalid refresh token:", error);
+        return redirect("/login?message=Session expired. Please log in again.");
+      } else {
+        // Handle other errors
+        console.error("An error occurred:", error);
+      }
     }
 
-    return redirect('/login?message=Check email to continue sign in process')
-  }
+    return redirect("/login?message=Check email to continue sign in process");
+  };
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -71,7 +94,7 @@ export default function Login({
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+        </svg>{" "}
         Back
       </Link>
 
@@ -87,6 +110,23 @@ export default function Login({
           name="email"
           placeholder="you@example.com"
           required
+        />
+        <label className="text-md" htmlFor="displayName">
+          Display Name
+        </label>
+        <input
+          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          name="displayName"
+          placeholder="Your Display Name"
+          required
+        />
+        <label className="text-md" htmlFor="phone">
+          Phone Number
+        </label>
+        <input
+          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          name="phone"
+          placeholder="Your Phone Number"
         />
         <label className="text-md" htmlFor="password">
           Password
@@ -114,5 +154,5 @@ export default function Login({
         )}
       </form>
     </div>
-  )
+  );
 }
