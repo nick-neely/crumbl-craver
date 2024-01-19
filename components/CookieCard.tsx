@@ -16,7 +16,7 @@ export const CookieCard: React.FC<CookieProps> = ({
   <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
     <div className="flex-shrink-0">
       <img
-        className="h-64 w-full bg-slate-100 object-cover"
+        className="h-80 w-full bg-slate-100 object-cover sm:h-64"
         src={imageUrl}
         alt={name}
       />

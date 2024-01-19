@@ -1,155 +1,57 @@
-import Link from "next/link";
-import { headers, cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { PhoneNumberInput } from "../../components/PhoneNumberInput";
+import Link from 'next/link'
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
+export default function Login() {
   const signIn = async (formData: FormData) => {
-    "use server";
-
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-
+    'use server'
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    });
-
+    })
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      return redirect('/login?message=Could not authenticate user')
     }
-
-    return redirect("/");
-  };
-
-  const signUp = async (formData: FormData) => {
-    "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const displayName = formData.get("displayName") as string;
-    const phone = formData.get("phone") as string;
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${origin}/auth/callback`,
-          data: { displayName, phone: phone },
-        },
-      });
-
-      // After successful sign-up, do something else
-      if (data && data.user) {
-        // The user has been successfully signed up and the profile has been created in the `route.ts` file.
-        // You can do something else here, like redirecting the user to another page.
-      } else if (error) {
-        console.error("Signup error:", error);
-        // Handle the signup error
-        return redirect("/login?message=Could not complete sign up");
-      }
-    } catch (error) {
-      if (
-        (error as any).name === "AuthApiError" &&
-        (error as any).status === 400
-      ) {
-        // Handle the invalid refresh token error
-        console.error("Invalid refresh token:", error);
-        return redirect("/login?message=Session expired. Please log in again.");
-      } else {
-        // Handle other errors
-        console.error("An error occurred:", error);
-      }
-    }
-
-    return redirect("/login?message=Check email to continue sign in process");
-  };
+    return redirect('/')
+  }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-      <Link
-        href="/"
-        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{" "}
-        Back
-      </Link>
-
+    <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <form
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+        className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in"
         action={signIn}
       >
         <label className="text-md" htmlFor="email">
           Email
         </label>
         <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          className="mb-6 rounded-md border bg-inherit px-4 py-2"
           name="email"
           placeholder="you@example.com"
           required
         />
-        <label className="text-md" htmlFor="displayName">
-          Display Name
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="displayName"
-          placeholder="Your Display Name"
-          required
-        />
-        <label className="text-md" htmlFor="phone">
-          Phone Number
-        </label>
-        <PhoneNumberInput />
         <label className="text-md" htmlFor="password">
           Password
         </label>
         <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          className="mb-6 rounded-md border bg-inherit px-4 py-2"
           type="password"
           name="password"
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+        <button className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground">
           Sign In
         </button>
-        <button
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
-        >
-          Sign Up
-        </button>
-        {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
-          </p>
-        )}
+        <Link href="/signup" className="text-center text-sm text-foreground/60">
+          Don't have an account? Sign up
+        </Link>
       </form>
     </div>
-  );
+  )
 }
