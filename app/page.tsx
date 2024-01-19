@@ -1,45 +1,63 @@
-import DeployButton from '../components/DeployButton'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import AuthButton from '../components/AuthButton'
-import { createClient } from '@/utils/supabase/server'
-import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps'
-import SignUpUserSteps from '@/components/SignUpUserSteps'
-import Header from '@/components/Header'
-import { cookies } from 'next/headers'
+import { CookieCard } from '../components/CookieCard'
+import { Separator } from '@/components/ui/separator'
+
+interface CookieType {
+  name: string
+  description: string
+  caloriesText: string
+  imageUrl: string
+}
+
+async function getCookies() {
+  const response = await fetch('http://localhost:3000/api/cookies')
+
+  if (!response.ok) {
+    console.error(`HTTP error! status: ${response.status}`)
+    return []
+  }
+  return response.json()
+}
 
 export default async function Index() {
-  const cookieStore = cookies()
-
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient(cookieStore)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-
-  const isSupabaseConnected = canInitSupabaseClient()
+  const data = await getCookies()
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
+    <div className="flex w-full flex-1 flex-col items-center gap-20">
+      <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
+        <div className="flex w-full max-w-4xl items-center justify-end p-3 text-sm">
+          <AuthButton />
         </div>
       </nav>
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-        <Header />
-        <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main>
-      </div>
+      <Card className="flex w-full max-w-4xl flex-col gap-16 p-8 shadow-inner shadow-slate-300">
+        <CardHeader>
+          <CardTitle className="text-4xl font-bold">Weekly Menu</CardTitle>
+          <CardDescription>1/15/24 - 1/20/24</CardDescription>
+        </CardHeader>
+        <Separator className="m-0 rounded-md bg-slate-500 p-1" />
+        <CardContent>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+            {data.map((cookie: CookieType) => (
+              <CookieCard
+                name={cookie.name}
+                description={cookie.description}
+                caloriesText={cookie.caloriesText}
+                imageUrl={cookie.imageUrl}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
+      <footer className="flex w-full justify-center border-t border-t-foreground/10 p-8 text-center text-xs">
         <p>
           Powered by{' '}
           <a

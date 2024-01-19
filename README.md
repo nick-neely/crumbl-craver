@@ -1,93 +1,126 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Crumbl Craver
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
-
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+Crumbl Craver is a web application designed for cookie enthusiasts. It offers an easy way to track and explore the latest cookie flavors from Crumbl Cookie. Built with Next.js and Supabase, the app provides real-time updates, user interaction, and a rich, responsive user interface.
 
 ## Features
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- **Real-Time Flavor Updates:** Stay informed about the latest Crumbl Cookie flavors as soon as they're available.
+- **User Ratings and Reviews:** Rate and review your favorite flavors, and see what others think.
+- **Personalized Notifications:** Receive notifications for new flavors and when your favorites are back.
+- **Flavor Tracking:** Mark flavors as favorites and keep a history of flavors you've enjoyed.
+- **User Authentication:** Secure sign-up and login functionality.
+- **Responsive Design:** A seamless experience on both desktop and mobile devices.
 
-## Demo
+## Technology Stack
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui
+- **Backend:** Supabase (for authentication, database, and real-time updates)
+- **Deployment:** Vercel
 
-## Deploy to Vercel
+## Prerequisites
 
-Vercel deployment will guide you through creating a Supabase account and project.
+Before you begin, ensure you have met the following requirements:
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+- Node.js 12.0 or higher
+- npm (comes with Node.js), pnpm or Yarn
+- A Supabase account and project for database and authentication services
+- A configured environment file (.env.local) with your Supabase credentials
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This%20starter%20configures%20Supabase%20Auth%20to%20use%20cookies%2C%20making%20the%20user's%20session%20available%20throughout%20the%20entire%20Next.js%20app%20-%20Client%20Components%2C%20Server%20Components%2C%20Route%20Handlers%2C%20Server%20Actions%20and%20Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png&integration-ids=oac_VqOgBHqhEoFTPzGkPd7L0iH6)
+## Installation
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+To set up the project locally, follow these steps:
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+1. **Clone the Repository:**
 
-## Clone and run locally
+```
+git clone https://github.com/yourusername/crumbl-craver.git
+cd crumbl-craver
+```
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+2. **Install Dependencies:**
 
-2. Create a Next.js app using the Supabase Starter template npx command
+```
+pnpm install
+```
 
-   ```bash
-   npx create-next-app -e with-supabase
-   ```
+3. **Set Environment Variables:**
+Create a `.env.local` file at the root of the project and add the necessary Supabase credentials.
 
-3. Use `cd` to change into the app's directory
+4. **Run the Development Server:**
+```
+pnpm run dev
+```
 
-   ```bash
-   cd name-of-new-app
-   ```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-4. Rename `.env.local.example` to `.env.local` and update the following:
+## Usage
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+After installation, you can start using the app to explore various Crumbl Cookie flavors, rate them, and receive updates. Register for an account to access personalized features.
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+## Code Structure
 
-5. You can now run the Next.js local development server:
+Below is an overview of the important files and directories in the Crumbl Craver project:
 
-   ```bash
-   npm run dev
-   ```
+- `.next/` - Generated automatically by Next.js during the build. It contains the output files.
+- `app/` - Contains the core functionality of the application.
+  - `api/` - Houses the backend API routes.
+    - `auth/` - Contains authentication-related API endpoints.
+      - `callback/` - Handles the authentication callback.
+        - `route.ts` - The server-side logic for authentication callbacks.
+  - `login/` - Manages the login view.
+    - `page.tsx` - The React component for the login page.
+- `components/` - React components used across the application.
+- `utils/` - Utility functions and helpers, including Supabase client initializations.
+  - `supabase/` - Supabase-related configurations and utilities.
+    - `client.ts` - Initializes and exports the Supabase client.
+    - `middleware.ts` - Middleware for handling authentication and other server-side logic.
+    - `server.ts` - Server-side utilities for Supabase interaction.
+- `.env.local` - Environment variables for local development, including Supabase credentials (not tracked by Git).
+- `middleware.ts` - Global middleware for Next.js.
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+## FAQ
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+**Q: How do I sign up for notifications about new Crumbl Cookie flavors?**
 
-## Feedback and issues
+A: Once you create an account and log in, go to your profile settings and opt-in for notifications. You can choose to receive updates via email or SMS.
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+**Q: Is the Crumbl Craver app affiliated with the official Crumbl Cookies company?**
 
-## More Supabase examples
+A: No, Crumbl Craver is a fan-made project and is not officially affiliated with Crumbl Cookies. It is designed to enhance the experience for cookie enthusiasts.
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+**Q: Can I contribute to the development of Crumbl Craver?**
+
+A: Yes, contributions are welcome! Please refer to the Contributing section of this document for guidelines on how to contribute.
+
+**Q: What should I do if I encounter an issue with the app?**
+
+A: If you run into any problems, please open an issue in the GitHub repository with a detailed description of the problem and steps to reproduce it. We appreciate your feedback and will address the issue as promptly as possible.
+
+**Q: How secure is my personal information within the app?**
+
+A: Protecting your privacy is our top priority. We follow best practices for data security and comply with all relevant privacy laws to ensure your information is kept secure.
+
+**Q: Are there any costs associated with using Crumbl Craver?**
+
+A: Crumbl Craver is completely free to use. There are no hidden charges for accessing and using the app's features.
+
+**Q: Where can I find the terms of service and privacy policy?**
+
+A: The terms of service and privacy policy are accessible from the app's login page. We recommend reading them before creating an account.
+
+**Q: Who can I contact for more support?**
+
+A: For additional support, please email our support team at support@crumblcraver.com, and we'll be happy to assist you.
+
+
+## Contributing
+
+Contributions to the Crumbl Craver project are welcome. Please read our contributing guidelines before submitting your contributions or opening a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+Crumbl Craver is not affiliated with Crumbl Cookies but is a fan-made project to enhance the cookie-tasting experience.
