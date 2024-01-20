@@ -1,57 +1,125 @@
+'use client'
+import { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import signIn from '../actions/signIn'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+
+// TypeScript interface for form data
+interface LoginFormInputs {
+  email: string
+  password: string
+}
+
+// Zod schema for form validation
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Invalid email format' }),
+  password: z
+    .string()
+    .min(6, { message: 'Password must be at least 6 characters long' }),
+})
 
 export default function Login() {
-  const signIn = async (formData: FormData) => {
-    'use server'
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
+  const [signInError, setSignInError] = useState('')
+  const form = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
+  })
+
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    try {
+      await signIn(data)
+      if (typeof window !== 'undefined') {
+      }
+    } catch (error) {
+      setSignInError('Sign-in failed. Please check your credentials.')
     }
-    return redirect('/')
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <form
-        className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in"
-        action={signIn}
-      >
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <button className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground">
-          Sign In
-        </button>
-        <Link href="/signup" className="text-center text-sm text-foreground/60">
-          Don't have an account? Sign up
-        </Link>
-      </form>
+    <div className="flex min-h-screen items-center justify-center">
+      <Card className="flex flex-col items-center justify-center py-2">
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+          <CardDescription>Please enter your credentials</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in"
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.email?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.password?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              {signInError && <p className="text-red-500">{signInError}</p>}
+              <Button
+                type="submit"
+                className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
+              >
+                Sign In
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <Link
+            href="/signup"
+            className="text-center text-sm text-foreground/60"
+          >
+            Don't have an account? Sign up
+          </Link>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
