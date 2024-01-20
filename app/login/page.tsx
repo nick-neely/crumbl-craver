@@ -23,6 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Loader2 } from 'lucide-react'
 
 // TypeScript interface for form data
 interface LoginFormInputs {
@@ -40,17 +41,21 @@ const loginSchema = z.object({
 
 export default function Login() {
   const [signInError, setSignInError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
   })
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    setIsLoading(true)
     try {
       await signIn(data)
       if (typeof window !== 'undefined') {
       }
     } catch (error) {
       setSignInError('Sign-in failed. Please check your credentials.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -102,12 +107,19 @@ export default function Login() {
                 )}
               />
               {signInError && <p className="text-red-500">{signInError}</p>}
-              <Button
-                type="submit"
-                className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
-              >
-                Sign In
-              </Button>
+              {isLoading ? (
+                <Button disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
+                >
+                  Sign In
+                </Button>
+              )}
             </form>
           </Form>
         </CardContent>
