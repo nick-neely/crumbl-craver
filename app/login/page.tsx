@@ -25,8 +25,8 @@ import {
 } from '@/components/ui/card'
 import { Loader2 } from 'lucide-react'
 
-// TypeScript interface for form data
-interface LoginFormInputs {
+// Interface for form values
+interface LoginFormValues {
   email: string
   password: string
 }
@@ -42,11 +42,12 @@ const loginSchema = z.object({
 export default function Login() {
   const [signInError, setSignInError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const form = useForm<LoginFormInputs>({
+
+  const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true)
     try {
       await signIn(data)
@@ -117,7 +118,7 @@ export default function Login() {
                   type="submit"
                   className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
                 >
-                  Sign In
+                  Log In
                 </Button>
               )}
             </form>
