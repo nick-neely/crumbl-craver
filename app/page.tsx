@@ -50,15 +50,8 @@ export default async function Index() {
 
       <footer className="flex w-full justify-center border-t border-t-foreground/10 p-8 text-center text-xs">
         <p>
-          Powered by{' '}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
+          Crumbl Craver is not affiliated with Crumbl Cookies but is a fan-made
+          project to enhance the cookie-tasting experience.
         </p>
       </footer>
     </div>

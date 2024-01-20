@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/card'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
+import { formatPhoneNumber } from '@/lib/utils'
 
 // Interface for form values
 interface SignupFormValues {
@@ -48,6 +49,11 @@ const signupSchema = z.object({
 export default function Signup() {
   const [signUpError, setSignUpError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormValues>()
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -129,7 +135,14 @@ export default function Signup() {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input type="tel" placeholder="Phone Number" {...field} />
+                      <Input
+                        type="tel"
+                        placeholder="Phone Number"
+                        {...register('phone', { required: true })}
+                        onChange={(e) => {
+                          e.target.value = formatPhoneNumber(e.target.value)
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -146,7 +159,7 @@ export default function Signup() {
                   type="submit"
                   className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
                 >
-                  Sign In
+                  Sign Up
                 </Button>
               )}
             </form>
