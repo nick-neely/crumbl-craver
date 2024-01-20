@@ -8,6 +8,7 @@ import {
 import AuthButton from '../components/AuthButton'
 import { CookieCard } from '../components/CookieCard'
 import { Separator } from '@/components/ui/separator'
+import fetchCrumblCookies from '@/utils/fetchCrumblCookies'
 
 interface CookieType {
   name: string
@@ -16,18 +17,8 @@ interface CookieType {
   imageUrl: string
 }
 
-async function getCookies() {
-  const response = await fetch('http://localhost:3000/api/cookies')
-
-  if (!response.ok) {
-    console.error(`HTTP error! status: ${response.status}`)
-    return []
-  }
-  return response.json()
-}
-
 export default async function Index() {
-  const data = await getCookies()
+  const data = await fetchCrumblCookies()
 
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-20">
