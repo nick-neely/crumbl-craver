@@ -2,6 +2,8 @@
 
 Crumbl Craver is a web application designed for cookie enthusiasts. It offers an easy way to track and explore the latest cookie flavors from Crumbl Cookie. Built with Next.js and Supabase, the app provides real-time updates, user interaction, and a rich, responsive user interface.
 
+![Screenshot 2024-01-20 at 23-13-34 Crumbl Craver](https://github.com/nick-neely/crumbl-craver/assets/49537823/a8720e61-ffb9-4266-9196-691ea9b635c8)
+
 ## Features
 
 - **Real-Time Flavor Updates:** Stay informed about the latest Crumbl Cookie flavors as soon as they're available.
@@ -14,7 +16,7 @@ Crumbl Craver is a web application designed for cookie enthusiasts. It offers an
 ## Technology Stack
 
 - **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui
-- **Backend:** Supabase (for authentication, database, and real-time updates)
+- **Backend:** Supabase (for authentication, database, storage and real-time updates)
 - **Deployment:** Vercel
 
 ## Prerequisites
