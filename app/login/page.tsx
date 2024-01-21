@@ -51,8 +51,6 @@ export default function Login() {
     setIsLoading(true)
     try {
       await signIn(data)
-      if (typeof window !== 'undefined') {
-      }
     } catch (error) {
       setSignInError('Sign-in failed. Please check your credentials.')
     } finally {

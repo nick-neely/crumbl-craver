@@ -17,12 +17,13 @@ interface User {
 
 export default function AuthButton() {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(false) // Loading state
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchUserData = async () => {
       const user = await getUserData()
       setUser(user)
+      setIsLoading(false)
     }
 
     fetchUserData()
@@ -31,8 +32,11 @@ export default function AuthButton() {
   const handleSignOut = async () => {
     setIsLoading(true)
     await signOut()
-    setUser(null)
-    setIsLoading(false)
+    window.location.href = '/login'
+  }
+
+  if (isLoading) {
+    return <Loader2 className="h-6 w-6 animate-spin" />
   }
 
   return (
