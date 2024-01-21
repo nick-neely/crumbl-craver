@@ -1,42 +1,64 @@
-import { createClient } from '@/utils/supabase/server'
+'use client'
 import Link from 'next/link'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from '@/components/ui/button'
+import { useState, useEffect } from 'react'
+import signOut from '@/app/actions/signOut'
+import getUserData from '@/app/actions/getUserData'
+import { Loader2 } from 'lucide-react'
 
-export default async function AuthButton() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+// Define the User interface
+interface User {
+  email?: string
+  user_metadata: {
+    displayName?: string
+  }
+}
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+export default function AuthButton() {
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(false) // Loading state
 
-  const signOut = async () => {
-    'use server'
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = await getUserData()
+      setUser(user)
+    }
 
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    await supabase.auth.signOut()
-    return redirect('/')
+    fetchUserData()
+  }, [])
+
+  const handleSignOut = async () => {
+    setIsLoading(true)
+    await signOut()
+    setUser(null)
+    setIsLoading(false)
   }
 
-  return user ? (
+  return (
     <div className="flex items-center gap-4">
-      Hey, {user.user_metadata.displayName || user.email}!
-      <form action={signOut}>
-        <Button variant={'secondary'}>Log out</Button>
-      </form>
-    </div>
-  ) : (
-    <div className="flex items-center gap-4">
-      <Link href="/login" className={buttonVariants()}>
-        Log In
-      </Link>
-      <Link href="/signup" className={buttonVariants()}>
-        Sign Up
-      </Link>
+      {user ? (
+        <>
+          Hey, {user.user_metadata.displayName || user.email || 'Guest'}
+          {isLoading ? (
+            <Button disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button onClick={handleSignOut}> Log Out </Button>
+          )}
+        </>
+      ) : (
+        <>
+          <Link href="/login" className={buttonVariants()}>
+            Log In
+          </Link>
+          <Link href="/signup" className={buttonVariants()}>
+            Sign Up
+          </Link>
+        </>
+      )}
     </div>
   )
 }
