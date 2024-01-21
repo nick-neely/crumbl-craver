@@ -9,6 +9,8 @@ import AuthButton from '../components/AuthButton'
 import { CookieCard } from '../components/CookieCard'
 import { Separator } from '@/components/ui/separator'
 import fetchCrumblCookies from '@/utils/fetchCrumblCookies'
+import Link from 'next/link'
+import { CrumblCraverLogo } from '@/components/CrumblCraverLogo'
 
 interface CookieType {
   name: string
@@ -23,6 +25,17 @@ export default async function Index() {
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-20">
       <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
+        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
+          <div className="flex items-center gap-4">
+            <span className="text-3xl font-bold">Crumbl Craver</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/">
+              <CrumblCraverLogo />
+            </Link>
+          </div>
+        </div>
+
         <div className="flex w-full max-w-4xl items-center justify-end p-3 text-sm">
           <AuthButton />
         </div>

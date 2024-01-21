@@ -1,15 +1,43 @@
 import { GeistSans } from 'geist/font/sans'
 import './styles/globals.css'
+import { Metadata, Viewport } from 'next'
+import { siteConfig } from '@/config/site'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
 
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: 'Crumbl Craver',
-  description:
-    'Discover and track the latest Crumbl Cookie flavors with ease! Crumbl Craver, powered by Next.js and Supabase, offers real-time updates, user ratings, and personalized flavor notifications for cookie enthusiasts.',
+export const metadata: Metadata = {
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  metadataBase: new URL(siteConfig.url),
+  description: siteConfig.description,
+  keywords: [
+    'Crumbl Craver',
+    'Cookie Flavor Updates',
+    'Crumbl Cookie Flavors',
+    'Cookie Enthusiasts',
+    'Latest Cookie Flavors',
+    'Crumbl Cookie Menu',
+    'Cookie Flavor Alerts',
+    'New Cookie Releases',
+    'Crumbl Cookie Notifications',
+    'Dessert Discovery',
+    'Cookie Flavor Tracker',
+    'Crumbl Cookie News',
+    'Online Dessert Updates',
+    'Automated Flavor Updates',
+    'Cookie Shop Web Scraper',
+  ],
+  authors: [
+    {
+      name: 'Nick Neely',
+    },
+  ],
+  creator: 'Nick Neely',
+  manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export default function RootLayout({

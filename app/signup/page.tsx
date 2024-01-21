@@ -34,7 +34,7 @@ interface SignupFormValues {
   phone: string
 }
 
-// Complete the form validation schema using zod
+// Zod schema for form validation
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email format' }),
   password: z

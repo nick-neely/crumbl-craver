@@ -11,6 +11,11 @@ interface SignUpData {
   phone: string
 }
 
+/**
+ * Signs up a user with the provided data.
+ * @param {SignUpData} data - The sign up data including email, password, displayName, and phone.
+ * @returns {Promise<void>} - A promise that resolves when the sign up process is complete.
+ */
 export default async function signUp({
   email,
   password,
