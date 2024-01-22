@@ -7,11 +7,13 @@ Crumbl Craver is a web application designed for cookie enthusiasts. It offers an
 ## Features
 
 - **Real-Time Flavor Updates:** Stay informed about the latest Crumbl Cookie flavors as soon as they're available.
+- **User Authentication:** Secure sign-up and login functionality.
+- **Responsive Design:** A seamless experience on both desktop and mobile devices.
+
+## Upcoming
 - **User Ratings and Reviews:** Rate and review your favorite flavors, and see what others think.
 - **Personalized Notifications:** Receive notifications for new flavors and when your favorites are back.
 - **Flavor Tracking:** Mark flavors as favorites and keep a history of flavors you've enjoyed.
-- **User Authentication:** Secure sign-up and login functionality.
-- **Responsive Design:** A seamless experience on both desktop and mobile devices.
 
 ## Technology Stack
 
@@ -50,7 +52,7 @@ Create a `.env.local` file at the root of the project and add the necessary Supa
 
 4. **Run the Development Server:**
 ```
-pnpm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
