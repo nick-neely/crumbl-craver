@@ -30,10 +30,6 @@ async function fetchCrumblCookies() {
     const match = caloriesText.match(/(\d+)-?(\d+)?\s?cal/)
     const calories = match ? parseInt(match[1], 10) : undefined
 
-    console.log(
-      `Calories text: ${caloriesText}, Extracted Calories: ${calories}, Match: ${match}`
-    )
-
     if (imageUrl) {
       // Download image and get local path
       const imageFilePath = await downloadImage(imageUrl, name)
