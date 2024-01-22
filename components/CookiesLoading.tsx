@@ -8,7 +8,6 @@ import {
 import { Separator } from '@/components/ui/separator'
 
 const CookiesLoading = () => {
-  // Assuming you want to show a skeleton for 6 cookies
   const skeletonCount = 6
 
   return (
@@ -27,9 +26,10 @@ const CookiesLoading = () => {
           {Array.from({ length: skeletonCount }, (_, index) => (
             <div key={index} className="animate-pulse rounded shadow-lg">
               <div className="h-64 w-full rounded bg-gray-300" />
-              <div className="mt-4 h-6 w-3/4 rounded bg-gray-300" />
-              <div className="mt-2 h-6 w-1/2 rounded bg-gray-300" />
-              <div className="h-64 w-full rounded" />
+              <div className="ml-6 mt-6 h-6 w-3/4 rounded bg-gray-300" />
+              <div className="ml-6 mt-2 h-6 w-1/2 rounded bg-gray-300" />
+              <div className="mx-auto ml-6 mt-6 h-36 w-48 rounded bg-gray-300" />
+              <div className="h-20 w-full rounded" />
             </div>
           ))}
         </div>

@@ -13,6 +13,7 @@ import { RefreshCcw } from 'lucide-react'
 import useSWR from 'swr'
 import { useState } from 'react'
 import CookiesLoading from './CookiesLoading'
+import ErrorComponent from './ErrorComponent'
 
 interface CookieType {
   name: string
@@ -29,7 +30,7 @@ export default function CookieDashboard() {
   const { data, error, mutate } = useSWR('/api/getCookies', fetcher)
   const [isRefreshing, setIsRefreshing] = useState(false)
 
-  if (error) return <div>Failed to load cookies</div>
+  if (error) return <ErrorComponent error={error} reset={mutate} />
   if (!data) return <CookiesLoading />
 
   // data should be an array of cookies
