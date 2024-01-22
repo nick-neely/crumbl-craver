@@ -1,8 +1,9 @@
 'use client'
+import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import signUp from '../actions/signUp'
+import signIn from '../../actions/signIn'
 import {
   Form,
   FormControl,
@@ -13,7 +14,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import Link from 'next/link'
 import {
   Card,
   CardContent,
@@ -22,51 +23,36 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
-import { formatPhoneNumber } from '@/lib/utils'
 
 // Interface for form values
-interface SignupFormValues {
+interface LoginFormValues {
   email: string
   password: string
-  displayName: string
-  phone: string
 }
 
 // Zod schema for form validation
-const signupSchema = z.object({
+const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email format' }),
   password: z
     .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
-  displayName: z.string().min(1, { message: 'Display name is required' }),
-  phone: z
-    .string()
-    .min(10, { message: 'Phone number must be at least 10 digits' }),
+    .min(6, { message: 'Password must be at least 6 characters long' }),
 })
 
-export default function Signup() {
-  const [signUpError, setSignUpError] = useState('')
+export default function Login() {
+  const [signInError, setSignInError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignupFormValues>()
 
-  const form = useForm<SignupFormValues>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true)
     try {
-      await signUp(data)
-      if (typeof window !== 'undefined') {
-      }
+      await signIn(data)
     } catch (error) {
-      setSignUpError('Sign-up failed. Please try again.')
+      setSignInError('Sign-in failed. Please check your credentials.')
     } finally {
       setIsLoading(false)
     }
@@ -76,7 +62,7 @@ export default function Signup() {
     <div className="flex min-h-screen items-center justify-center">
       <Card className="flex flex-col items-center justify-center py-2">
         <CardHeader>
-          <CardTitle>Sign Up</CardTitle>
+          <CardTitle>Login</CardTitle>
           <CardDescription>Please enter your credentials</CardDescription>
         </CardHeader>
         <CardContent>
@@ -92,9 +78,11 @@ export default function Signup() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Email" {...field} />
+                      <Input placeholder="Email" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>
+                      {form.formState.errors.email?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -111,44 +99,13 @@ export default function Signup() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>
+                      {form.formState.errors.password?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="displayName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Display Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Display Name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="tel"
-                        placeholder="Phone Number"
-                        {...register('phone', { required: true })}
-                        onChange={(e) => {
-                          e.target.value = formatPhoneNumber(e.target.value)
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {signUpError && <p className="text-red-500">{signUpError}</p>}
+              {signInError && <p className="text-red-500">{signInError}</p>}
               {isLoading ? (
                 <Button disabled>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -159,18 +116,22 @@ export default function Signup() {
                   type="submit"
                   className="mb-2 rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-600"
                 >
-                  Sign Up
+                  Log In
                 </Button>
               )}
             </form>
           </Form>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col">
           <Link
-            href="/login"
+            href="/signup"
             className="text-center text-sm text-foreground/60"
           >
-            Already have an account? Login
+            Don't have an account? Sign up
+          </Link>
+
+          <Link href="/" className="text-center text-sm text-foreground/60">
+            Go Home
           </Link>
         </CardFooter>
       </Card>
