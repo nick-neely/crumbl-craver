@@ -19,14 +19,14 @@ interface CookieType {
   name: string
   description: string
   calories: string
+  calories_text: string
   image_url: string
 }
 
-// fetcher function to call your API endpoint
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export default function CookieDashboard() {
-  // Use the API endpoint for fetching cookies
+  // API endpoint for fetching cookies
   const { data, error, mutate } = useSWR('/api/getCookies', fetcher)
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -58,13 +58,12 @@ export default function CookieDashboard() {
       <Separator className="m-0 rounded-md bg-slate-500 p-1" />
       <CardContent>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {/* Map through cookies and render them */}
           {cookies.map((cookie, index) => (
             <CookieCard
               key={index}
               name={cookie.name}
               description={cookie.description}
-              calories={cookie.calories}
+              caloriesText={cookie.calories_text}
               imageUrl={cookie.image_url}
             />
           ))}
