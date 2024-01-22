@@ -22,7 +22,7 @@ async function fetchCrumblCookies() {
         .trim()
       const match = caloriesText.match(/(\\d+)-?(\\d+)?\\s?cal/)
       const calories = match ? parseInt(match[1], 10) : undefined
-      return { name, description, imageUrl, caloriesText }
+      return { name, description, imageUrl, calories, caloriesText }
     })
     .get()
   return crumblCookies

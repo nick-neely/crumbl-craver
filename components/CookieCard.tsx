@@ -3,14 +3,14 @@ import { Badge } from '@/components/ui/badge'
 interface CookieProps {
   name: string
   description: string
-  caloriesText: string
+  calories: string
   imageUrl: string
 }
 
 export const CookieCard: React.FC<CookieProps> = ({
   name,
   description,
-  caloriesText,
+  calories,
   imageUrl,
 }) => (
   <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
@@ -28,7 +28,7 @@ export const CookieCard: React.FC<CookieProps> = ({
       </div>
       <div className="mt-6 text-sm font-medium">
         <Badge variant={'secondary'} className="text-gray-500">
-          {caloriesText}
+          {calories} cal
         </Badge>
       </div>
     </div>

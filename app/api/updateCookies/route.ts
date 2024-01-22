@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.UPDATE_COOKIES_SECRET_KEY
 
 /**
  * Handles the POST request to update the cookies data.
- * 
+ *
  * @param req - The NextRequest object representing the incoming request.
  * @returns A Response object with the updated cookies data or an error message.
  */

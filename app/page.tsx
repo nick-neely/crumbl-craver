@@ -5,22 +5,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import AuthButton from '../components/AuthButton'
 import { CookieCard } from '../components/CookieCard'
 import { Separator } from '@/components/ui/separator'
-import fetchCrumblCookies from '@/utils/fetchCrumblCookies'
-import Link from 'next/link'
-import { CrumblCraverLogo } from '@/components/CrumblCraverLogo'
+import getCookies from './actions/cookies'
 
 interface CookieType {
   name: string
   description: string
-  caloriesText: string
-  imageUrl: string
+  calories: string
+  image_url: string
 }
 
 export default async function Index() {
-  const data = await fetchCrumblCookies()
+  const data = await getCookies()
 
   return (
     <div className="mt-20 flex w-full flex-1 flex-col items-center gap-20">
@@ -32,15 +29,16 @@ export default async function Index() {
         <Separator className="m-0 rounded-md bg-slate-500 p-1" />
         <CardContent>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-            {data.map((cookie: CookieType, index: number) => (
-              <CookieCard
-                key={index}
-                name={cookie.name}
-                description={cookie.description}
-                caloriesText={cookie.caloriesText}
-                imageUrl={cookie.imageUrl}
-              />
-            ))}
+            {data &&
+              data.map((cookie: CookieType, index: number) => (
+                <CookieCard
+                  key={index}
+                  name={cookie.name}
+                  description={cookie.description}
+                  calories={cookie.calories}
+                  imageUrl={cookie.image_url}
+                />
+              ))}
           </div>
         </CardContent>
       </Card>
