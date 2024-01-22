@@ -50,7 +50,6 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <main className="flex min-h-screen flex-col items-center">
-          <NavBar />
           {children}
         </main>
       </body>
