@@ -3,6 +3,7 @@ import cheerio from 'cheerio'
 import https from 'https'
 import fs from 'fs'
 import path from 'path'
+import { log } from 'next-axiom'
 
 // Utility function to fetch Crumbl cookie flavors and details
 async function fetchCrumblCookies() {
@@ -100,6 +101,10 @@ async function downloadImage(url: string, cookieName: string) {
       })
       .on('error', (e) => {
         console.error('Error downloading image:', e)
+        log.error('Error downloading image', {
+          code: '500',
+          message: e.toString(),
+        }) // Log error to Axiom
         reject(e)
       })
   })
