@@ -66,14 +66,20 @@ function sanitizeFileName(name: string) {
 async function downloadImage(url: string, cookieName: string) {
   const extension = path.extname(url) // Extracting the file extension from the URL
   const timestamp = new Date().getTime() // Generating a timestamp
-  const sanitizedFileName = `${sanitizeFileName(cookieName)}_${timestamp}${extension}` // Creating a unique file name
-  const dirPath = path.resolve(__dirname, 'images')
-  const filePath = path.join(dirPath, sanitizedFileName)
+  // timestamp not used currently, but could be used to prevent duplicate file names
+  const sanitizedFileName = `${sanitizeFileName(cookieName)}${extension}` // Creating a unique file name
+
+  // Determine the directory path based on the environment
+  const isVercel = process.env.VERCEL // Check if running on Vercel
+  const baseDir = isVercel ? '/tmp' : 'C:/tmp' // Use '/tmp' on Vercel and 'C:/tmp' locally
+  const dirPath = path.join(baseDir, 'images')
 
   // Check if the directory exists, if not, create it
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true })
   }
+
+  const filePath = path.join(dirPath, sanitizedFileName)
 
   return new Promise((resolve, reject) => {
     https
