@@ -23,3 +23,16 @@ export function formatPhoneNumber(value: string): string {
 
   return value
 }
+
+/**
+ * Returns the current week number of the year.
+ * @returns {number} The current week number.
+ */
+export function getCurrentWeek() {
+  const now = new Date()
+  const start = new Date(now.getFullYear(), 0, 1)
+  const diff = now.getTime() - start.getTime()
+  const oneDay = 1000 * 60 * 60 * 24
+  const day = Math.floor(diff / oneDay)
+  return Math.ceil(day / 7)
+}

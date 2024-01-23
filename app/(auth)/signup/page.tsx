@@ -80,7 +80,7 @@ export default function Signup({ searchParams }: SignupProps) {
       <Card className="flex flex-col items-center justify-center py-2">
         {message && (
           <div
-            className="flex items-center border-t-4 border-blue-500 bg-blue-100 p-4 dark:bg-blue-200"
+            className="flex items-center rounded-md border-t-4 border-blue-500 bg-blue-100 p-4 dark:bg-blue-200"
             role="alert"
           >
             <div className="flext items-center">

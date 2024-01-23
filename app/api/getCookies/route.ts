@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import Redis from 'ioredis'
 import { log } from 'next-axiom'
+import { getCurrentWeek } from '../../../lib/utils'
 
 // Initialize Redis client
 const redisUrl = process.env.UPSTASH_REDIS_URL
@@ -78,21 +79,8 @@ export async function GET(req: Request) {
 }
 
 /**
- * Returns the current week number of the year.
- * @returns {number} The current week number.
- */
-function getCurrentWeek() {
-  const now = new Date()
-  const start = new Date(now.getFullYear(), 0, 1)
-  const diff = now.getTime() - start.getTime()
-  const oneDay = 1000 * 60 * 60 * 24
-  const day = Math.floor(diff / oneDay)
-  return Math.ceil(day / 7)
-}
-
-/**
  * Calculates the time to live (TTL) in seconds until the next update.
- * The TTL is based on the current date and time, and the next update is scheduled for Sunday at 9 PM.
+ * The TTL is based on the current date and time, and the next update is scheduled for Sunday at 9:59 PM.
  * @returns The TTL in seconds until the next update.
  */
 function calculateTTL(): number {

@@ -1,10 +1,23 @@
 import type { NextRequest } from 'next/server'
 import fetchCrumblCookies from '@/utils/fetchCrumblCookies'
 import { supabaseAdmin } from '@/utils/supabase/admin'
+import { getCurrentWeek } from '../../../lib/utils'
+import Redis from 'ioredis'
 import fs from 'fs'
 import path from 'path'
 
-const SECRET_KEY = process.env.UPDATE_COOKIES_SECRET_KEY
+const SECRET_KEY = process.env.CRON_SECRET
+
+// Initialize Redis client
+const redisUrl = process.env.UPSTASH_REDIS_URL
+
+if (!redisUrl) {
+  throw new Error(
+    'UPSTASH_REDIS_URL is not defined in the environment variables'
+  )
+}
+
+const redis = new Redis(redisUrl)
 
 /**
  * Uploads an image file to Supabase storage.
@@ -95,6 +108,11 @@ export async function POST(req: NextRequest) {
       )
       if (error) throw error
     }
+
+    // After successful upsert operations, clear the Redis cache
+    const cacheKey = `cookies-week:${getCurrentWeek()}`
+    console.log('Clearing cache:', cacheKey)
+    await redis.del(cacheKey)
 
     return new Response(
       JSON.stringify({ message: 'Cookies updated successfully' }),

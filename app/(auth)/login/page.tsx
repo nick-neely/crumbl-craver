@@ -23,12 +23,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Loader2 } from 'lucide-react'
+import { Loader2, ShieldAlert } from 'lucide-react'
 
 // Interface for form values
 interface LoginFormValues {
   email: string
   password: string
+}
+
+interface SignupProps {
+  searchParams: { message?: string }
 }
 
 // Zod schema for form validation
@@ -39,13 +43,16 @@ const loginSchema = z.object({
     .min(6, { message: 'Password must be at least 6 characters long' }),
 })
 
-export default function Login() {
+export default function Login({ searchParams }: SignupProps) {
   const [signInError, setSignInError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   })
+
+  // Extract the message from searchParams
+  const message = searchParams.message
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true)
@@ -61,6 +68,24 @@ export default function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="flex flex-col items-center justify-center py-2">
+        {message && (
+          <div
+            className="flex items-center rounded-md border-t-4 border-red-500 bg-red-100 p-4 dark:bg-red-200"
+            role="alert"
+          >
+            <div className="flext items-center">
+              <ShieldAlert
+                className="h-6 w-6 text-red-500"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">
+                {decodeURIComponent(message)}
+              </p>
+            </div>
+          </div>
+        )}
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>Please enter your credentials</CardDescription>
