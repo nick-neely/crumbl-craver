@@ -45,7 +45,7 @@ export default function CookieDashboard() {
   }
 
   return (
-    <Card className="flex w-full max-w-4xl flex-col gap-16 p-8 shadow-inner shadow-slate-300">
+    <Card className="flex w-full max-w-4xl flex-col gap-16 p-8 shadow-inner shadow-slate-300 dark:border-slate-600 dark:shadow-slate-600">
       <CardHeader>
         <div className="flex w-full items-center justify-between">
           <div>

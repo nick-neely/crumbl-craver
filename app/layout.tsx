@@ -5,6 +5,7 @@ import { siteConfig } from '@/config/site'
 import { AxiomWebVitals } from 'next-axiom'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -52,7 +53,14 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <main className="flex min-h-screen flex-col items-center">
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </main>
         <SpeedInsights />
         <Analytics />
