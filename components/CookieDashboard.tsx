@@ -16,6 +16,7 @@ import CookiesLoading from './CookiesLoading'
 import ErrorComponent from './ErrorComponent'
 
 interface CookieType {
+  id: string
   name: string
   description: string
   calories: string
@@ -56,9 +57,9 @@ export default function CookieDashboard() {
       <Separator className="m-0 rounded-md bg-slate-500 p-1" />
       <CardContent>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {cookies.map((cookie, index) => (
+          {cookies.map((cookie) => (
             <CookieCard
-              key={index}
+              key={cookie.id}
               name={cookie.name}
               description={cookie.description}
               caloriesText={cookie.calories_text}
