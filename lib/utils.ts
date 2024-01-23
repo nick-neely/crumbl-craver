@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/**
+ * Formats a phone number by removing non-digit characters and adding dashes.
+ * @param value - The phone number to format.
+ * @returns The formatted phone number.
+ */
 export function formatPhoneNumber(value: string): string {
   value = value.replace(/\D/g, '') // remove non-digit characters
 

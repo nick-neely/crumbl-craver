@@ -47,6 +47,27 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Fetch all cookie IDs
+    const { data: cookies, error: fetchError } = await supabaseAdmin
+      .from('cookies')
+      .select('id')
+
+    if (fetchError) {
+      throw fetchError
+    }
+
+    // Update each cookie's is_active flag
+    for (const cookie of cookies) {
+      const { error: updateError } = await supabaseAdmin
+        .from('cookies')
+        .update({ is_active: false })
+        .match({ id: cookie.id })
+
+      if (updateError) {
+        throw updateError
+      }
+    }
+
     const crumblCookies = await fetchCrumblCookies()
 
     for (const cookie of crumblCookies) {
@@ -58,7 +79,7 @@ export async function POST(req: NextRequest) {
         imageFilePath as string
       )
 
-      // Use Supabase URL for image_url in upsert
+      // Use Supabase URL for image_url in upsert, set is_active to true for new
       const { error } = await supabaseAdmin.from('cookies').upsert(
         [
           {
@@ -67,6 +88,7 @@ export async function POST(req: NextRequest) {
             image_url: `https://tknjbaclwamgdwtkgaez.supabase.co/storage/v1/object/public/cookie_images/${uploadedImagePath}`,
             calories,
             calories_text: caloriesText,
+            is_active: true,
           },
         ],
         { onConflict: 'name' }

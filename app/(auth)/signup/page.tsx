@@ -2,6 +2,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { redirect } from 'next/navigation'
 import signUp from '../../actions/signUp'
 import {
   Form,
@@ -23,7 +24,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import Link from 'next/link'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Mail } from 'lucide-react'
 import { formatPhoneNumber } from '@/lib/utils'
 
 // Interface for form values
@@ -34,38 +35,41 @@ interface SignupFormValues {
   phone: string
 }
 
+interface SignupProps {
+  searchParams: { message?: string }
+}
+
 // Zod schema for form validation
 const signupSchema = z.object({
   email: z.string().email({ message: 'Invalid email format' }),
   password: z
     .string()
     .min(6, { message: 'Password must be at least 6 characters' }),
-  displayName: z.string().min(1, { message: 'Display name is required' }),
+  displayName: z
+    .string()
+    .min(1, { message: 'Display name is required' })
+    .max(20, { message: 'Display name must be less than 20 characters' }),
   phone: z
     .string()
     .min(10, { message: 'Phone number must be at least 10 digits' }),
 })
 
-export default function Signup() {
+export default function Signup({ searchParams }: SignupProps) {
   const [signUpError, setSignUpError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignupFormValues>()
-
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
   })
+
+  // Extract the message from searchParams
+  const message = searchParams.message
 
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
     setIsLoading(true)
     try {
       await signUp(data)
-      if (typeof window !== 'undefined') {
-      }
     } catch (error) {
+      console.error('Sign-up error:', error)
       setSignUpError('Sign-up failed. Please try again.')
     } finally {
       setIsLoading(false)
@@ -75,6 +79,21 @@ export default function Signup() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="flex flex-col items-center justify-center py-2">
+        {message && (
+          <div
+            className="flex items-center border-t-4 border-blue-500 bg-blue-100 p-4 dark:bg-blue-200"
+            role="alert"
+          >
+            <div className="flext items-center">
+              <Mail className="h-6 w-6 text-blue-500" aria-hidden="true" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-blue-700">
+                {decodeURIComponent(message)}
+              </p>
+            </div>
+          </div>
+        )}
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
           <CardDescription>Please enter your credentials</CardDescription>
@@ -136,11 +155,15 @@ export default function Signup() {
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
                       <Input
-                        type="tel"
                         placeholder="Phone Number"
-                        {...register('phone', { required: true })}
+                        {...field}
                         onChange={(e) => {
-                          e.target.value = formatPhoneNumber(e.target.value)
+                          const formattedValue = formatPhoneNumber(
+                            e.target.value
+                          )
+                          form.setValue('phone', formattedValue, {
+                            shouldValidate: true,
+                          })
                         }}
                       />
                     </FormControl>

@@ -34,7 +34,7 @@ export default function CookieDashboard() {
   if (!data) return <CookiesLoading />
 
   // data should be an array of cookies
-  const cookies: CookieType[] = data.response
+  const cookies: CookieType[] = data || []
 
   const revalidateData = async () => {
     setIsRefreshing(true)

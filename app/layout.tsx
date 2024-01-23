@@ -1,8 +1,8 @@
 import { GeistSans } from 'geist/font/sans'
 import './styles/globals.css'
-import { Metadata, Viewport } from 'next'
+import { Metadata } from 'next'
 import { siteConfig } from '@/config/site'
-import NavBar from '@/components/NavBar'
+import { AxiomWebVitals } from 'next-axiom'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -52,6 +52,7 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center">
           {children}
         </main>
+        <AxiomWebVitals />
       </body>
     </html>
   )
