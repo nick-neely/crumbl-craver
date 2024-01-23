@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/updateCookies",
-      "schedule": "1 22 * * 0"
+      "schedule": "59 21 * * 0"
     }
   ]
 }

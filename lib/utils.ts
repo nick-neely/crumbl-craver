@@ -29,10 +29,10 @@ export function formatPhoneNumber(value: string): string {
  * @returns {number} The current week number.
  */
 export function getCurrentWeek() {
-  const now = new Date()
-  const start = new Date(now.getFullYear(), 0, 1)
-  const diff = now.getTime() - start.getTime()
-  const oneDay = 1000 * 60 * 60 * 24
-  const day = Math.floor(diff / oneDay)
-  return Math.ceil(day / 7)
+  const now = new Date() // get current date
+  const start = new Date(now.getFullYear(), 0, 1) // First day of year
+  const diff = now.getTime() - start.getTime() // difference in milliseconds
+  const oneDay = 1000 * 60 * 60 * 24 // milliseconds in a day
+  const day = Math.floor(diff / oneDay) // get number of days since year started
+  return Math.ceil(day / 7) // get number of weeks since year started
 }

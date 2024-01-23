@@ -79,9 +79,24 @@ export async function GET(req: Request) {
 }
 
 /**
- * Calculates the time to live (TTL) in seconds until the next update.
- * The TTL is based on the current date and time, and the next update is scheduled for Sunday at 9:59 PM.
- * @returns The TTL in seconds until the next update.
+ * Calculates the Time To Live (TTL) in seconds until the next cache expiration time, which is set at 10:01 PM every Sunday.
+ *
+ * This function considers the current time and adjusts the TTL accordingly, ensuring that the cache is always refreshed
+ * at the start of the new week. It handles various cases such as if the current time is before or after the weekly expiration time.
+ *
+ * Note: The week starts on Sunday, with 0 representing Sunday.
+ *
+ * Usage:
+ *      const ttl = calculateTTL();
+ *      redis.set('myKey', 'myValue', 'EX', ttl);
+ *
+ * @returns {number} The TTL in seconds. This is the duration for which the cached data should remain valid.
+ *                   Once this duration elapses, the cache should be considered stale and in need of refreshing.
+ *
+ * Examples:
+ *      - If it is currently Thursday, calculateTTL() will return the number of seconds until 10:01 PM the coming Sunday.
+ *      - If it is 9:59 PM on Sunday, it will return the number of seconds until 10:01 PM the same day.
+ *      - If it is 10:00 PM on Sunday or any time after, it will calculate the seconds until 10:01 PM the next Sunday.
  */
 function calculateTTL(): number {
   const now = new Date()
@@ -93,7 +108,6 @@ function calculateTTL(): number {
   const daysUntilNextUpdate =
     nowDayOfWeek === 0 && nowHour < 21 ? 0 : 7 - nowDayOfWeek
 
-  // If today is Sunday and it's not yet 9:59 PM, calculate the hours and minutes until the update
   let hoursUntilNextUpdate = daysUntilNextUpdate * 24 - nowHour + 21 // Hours until next Sunday at 9 PM
   let minutesUntilNextUpdate = 59 - nowMinutes // Minutes until 59 past the hour
 
