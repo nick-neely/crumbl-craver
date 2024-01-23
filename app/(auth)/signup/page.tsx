@@ -2,7 +2,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { redirect } from 'next/navigation'
 import signUp from '../../actions/signUp'
 import {
   Form,
@@ -51,7 +50,7 @@ const signupSchema = z.object({
     .max(20, { message: 'Display name must be less than 20 characters' }),
   phone: z
     .string()
-    .min(10, { message: 'Phone number must be at least 10 digits' }),
+    .min(12, { message: 'Phone number must be at least 10 digits' }),
 })
 
 export default function Signup({ searchParams }: SignupProps) {

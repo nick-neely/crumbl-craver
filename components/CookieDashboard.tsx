@@ -36,6 +36,7 @@ export default function CookieDashboard() {
   // data should be an array of cookies
   const cookies: CookieType[] = data || []
 
+  // Currently not used
   const revalidateData = async () => {
     setIsRefreshing(true)
     await mutate() // This will re-fetch the data
@@ -50,9 +51,6 @@ export default function CookieDashboard() {
             <CardTitle className="text-4xl font-bold">Weekly Menu</CardTitle>
             <CardDescription>1/22/24 - 1/27/24</CardDescription>
           </div>
-          <Button onClick={revalidateData} variant="outline" size="icon">
-            <RefreshCcw className={isRefreshing ? 'animate-spin' : ''} />
-          </Button>
         </div>
       </CardHeader>
       <Separator className="m-0 rounded-md bg-slate-500 p-1" />

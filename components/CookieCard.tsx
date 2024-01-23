@@ -27,7 +27,7 @@ export const CookieCard: React.FC<CookieProps> = ({
         <p className="mt-3 text-base text-gray-500">{description}</p>
       </div>
       <div className="mt-6 text-sm font-medium">
-        <Badge variant={'secondary'} className="text-gray-500">
+        <Badge variant={'secondary'} className="text-gray-600">
           {caloriesText}
         </Badge>
       </div>
