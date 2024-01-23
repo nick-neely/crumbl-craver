@@ -3,6 +3,7 @@ import './styles/globals.css'
 import { Metadata } from 'next'
 import { siteConfig } from '@/config/site'
 import { AxiomWebVitals } from 'next-axiom'
+import { Analytics } from '@vercel/analytics/react'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -52,6 +53,7 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center">
           {children}
         </main>
+        <Analytics />
         <AxiomWebVitals />
       </body>
     </html>
