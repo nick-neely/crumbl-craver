@@ -18,13 +18,13 @@ export default async function Index() {
           <CardContent>
             <div className="flex justify-center gap-4">
               <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-[#1890a0ff] px-12 font-bold text-white shadow transition-colors hover:bg-[#1890a0]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1890a0] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#1890a0] dark:text-[#ffffff] dark:hover:bg-[#1890a0]/90 dark:focus-visible:ring-[#1890a0]"
+                className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-[#1890a0ff] px-12 font-bold text-white shadow transition-colors hover:bg-[#1890a0]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1890a0] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#1890a0] dark:text-[#ffffff] dark:hover:bg-[#1890a0]/90 dark:focus-visible:ring-[#1890a0]"
                 href="/signup"
               >
                 Sign Up
               </Link>
               <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-yellow-500 px-12 font-bold text-white shadow transition-colors hover:bg-[#FFC83B]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FFC83B] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#FFC83B] dark:text-[#ffffff] dark:hover:bg-[#FFC83B]/90 dark:focus-visible:ring-[#FFC83B]"
+                className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-yellow-500 px-12 font-bold text-white shadow transition-colors hover:bg-[#FFC83B]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FFC83B] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#FFC83B] dark:text-[#ffffff] dark:hover:bg-[#FFC83B]/90 dark:focus-visible:ring-[#FFC83B]"
                 href="/login"
               >
                 Log In

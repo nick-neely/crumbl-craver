@@ -17,7 +17,7 @@ export function HeroSection() {
           <Image
             src={cookieImage}
             alt="Delicious Cookies"
-            className="mx-auto aspect-video overflow-hidden rounded-xl object-bottom sm:w-full lg:order-last lg:aspect-square"
+            className="mx-auto aspect-video rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
           ></Image>
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
