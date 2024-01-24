@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
 
 interface CookieProps {
   name: string
@@ -13,21 +14,31 @@ export const CookieCard: React.FC<CookieProps> = ({
   caloriesText,
   imageUrl,
 }) => (
-  <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-    <div className="flex-shrink-0">
-      <img
-        className="h-80 w-full bg-slate-100 object-cover sm:h-64"
+  <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-lg dark:shadow-slate-700">
+    <div className="flex-shrink-0 overflow-hidden">
+      <Image
+        className="h-72 w-full bg-slate-100 object-cover dark:bg-slate-600 sm:h-64"
         src={imageUrl}
         alt={name}
+        fill={false}
+        width={400}
+        height={400}
       />
     </div>
-    <div className="flex flex-1 flex-col justify-between bg-white p-6">
+    <div className="flex flex-1 flex-col justify-between bg-white p-6 dark:bg-slate-800">
       <div className="flex-1">
-        <p className="text-xl font-semibold text-gray-900">{name}</p>
-        <p className="mt-3 text-base text-gray-500">{description}</p>
+        <p className="text-xl font-semibold text-gray-900 dark:text-gray-300">
+          {name}
+        </p>
+        <p className="mt-3 text-base text-gray-500 dark:text-gray-400">
+          {description}
+        </p>
       </div>
       <div className="mt-6 text-sm font-medium">
-        <Badge variant={'secondary'} className="text-gray-600">
+        <Badge
+          variant={'secondary'}
+          className="text-gray-600 dark:text-gray-300"
+        >
           {caloriesText}
         </Badge>
       </div>

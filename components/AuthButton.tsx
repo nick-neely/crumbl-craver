@@ -43,7 +43,9 @@ export default function AuthButton() {
     <div className="flex items-center gap-4">
       {user ? (
         <>
-          Hey, {user.user_metadata.displayName || user.email || 'Guest'}
+          <div className="hidden md:block">
+            Hey, {user.user_metadata.displayName || user.email || 'Guest'}
+          </div>
           {isLoading ? (
             <Button disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

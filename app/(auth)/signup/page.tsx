@@ -77,7 +77,7 @@ export default function Signup({ searchParams }: SignupProps) {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <Card className="flex flex-col items-center justify-center py-2">
+      <Card className="flex w-96 flex-col items-center justify-center py-2 dark:border-slate-600 dark:bg-slate-800">
         {message && (
           <div
             className="flex items-center rounded-md border-t-4 border-blue-500 bg-blue-100 p-4 dark:bg-blue-200"
