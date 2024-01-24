@@ -1,18 +1,16 @@
 import NavBar from '@/components/NavBar'
 import { FeatureList } from '@/components/component/feature-list'
 import { HeroSection } from '@/components/component/hero-section'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Link from 'next/link'
 
 export default async function Index() {
   return (
     <>
-      <NavBar />
       <div className="flex w-full flex-1 flex-col items-center gap-14">
         <HeroSection />
         <FeatureList />
-        <Card className="mx-4 mt-0 rounded-lg p-6 text-center shadow-lg dark:border-slate-600 dark:bg-gray-800 md:mt-12">
+        <Card className="mx-4 mt-0 rounded-lg p-6 text-center shadow-lg dark:border-slate-600 dark:bg-slate-800 md:mt-12">
           <CardHeader className="mb-6 text-3xl font-bold">
             Ready to get started?
           </CardHeader>
@@ -34,7 +32,7 @@ export default async function Index() {
           </CardContent>
         </Card>
 
-        <footer className="flex w-full justify-center border-t border-t-foreground/10 p-8 text-center text-xs">
+        <footer className="flex w-full justify-center border-t border-t-foreground/5 bg-gradient-to-t from-slate-300 to-slate-100 p-8 text-center text-xs dark:bg-gradient-to-t dark:from-slate-800 dark:to-slate-600">
           <p>
             Crumbl Craver is not affiliated with
             <Link href="https://crumblcookies.com/" className="font-bold">
