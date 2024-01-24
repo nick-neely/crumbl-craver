@@ -2,13 +2,15 @@
 
 Crumbl Craver is a web application designed for cookie enthusiasts. It offers an easy way to track and explore the latest cookie flavors from Crumbl Cookie. Built with Next.js and Supabase, the app provides real-time updates, user interaction, and a rich, responsive user interface.
 
-![Screenshot 2024-01-20 at 23-13-34 Crumbl Craver](https://github.com/nick-neely/crumbl-craver/assets/49537823/a8720e61-ffb9-4266-9196-691ea9b635c8)
+![image](https://github.com/nick-neely/crumbl-craver/assets/49537823/b5e47c60-acd9-496e-bd50-b28645050bbb)
 
 ## Features
 
 - **Real-Time Flavor Updates:** Stay informed about the latest Crumbl Cookie flavors as soon as they're available.
 - **User Authentication:** Secure sign-up and login functionality.
 - **Responsive Design:** A seamless experience on both desktop and mobile devices.
+
+![image](https://github.com/nick-neely/crumbl-craver/assets/49537823/c51d585c-6f17-470e-a476-81a90789e74d)
 
 ## Upcoming
 - **User Ratings and Reviews:** Rate and review your favorite flavors, and see what others think.
@@ -17,8 +19,8 @@ Crumbl Craver is a web application designed for cookie enthusiasts. It offers an
 
 ## Technology Stack
 
-- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui
-- **Backend:** Supabase (for authentication, database, storage and real-time updates)
+- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui, Zustand, SWR
+- **Backend:** Supabase (for authentication, database, storage and real-time updates), Upstash Redis
 - **Deployment:** Vercel
 
 ## Prerequisites
@@ -65,22 +67,30 @@ After installation, you can start using the app to explore various Crumbl Cookie
 
 Below is an overview of the important files and directories in the Crumbl Craver project:
 
-- `.next/` - Generated automatically by Next.js during the build. It contains the output files.
 - `app/` - Contains the core functionality of the application.
+  - `auth/` - Authentication route group.
+    - `login/` - Handles user login route.
+    - `signup/` - Manages user signup route.
+  - `actions/` - Holds Server Actions used by Next.js.
   - `api/` - Houses the backend API routes.
-    - `auth/` - Contains authentication-related API endpoints.
-      - `callback/` - Handles the authentication callback.
-        - `route.ts` - The server-side logic for authentication callbacks.
-  - `login/` - Manages the login view.
-    - `page.tsx` - The React component for the login page.
+    - `getCookies/` - Endpoint for retrieving cookie data.
+    - `updateCookies/` - Endpoint for updating cookie data.
+  - `dashboard/` - Related to the user dashboard interface.
+  - `public/` - Publicly accessible files, such as images and static assets.
+  - `state/` - Manages global state management.
+    - `authStore.ts` - State management.
 - `components/` - React components used across the application.
-- `utils/` - Utility functions and helpers, including Supabase client initializations.
+- `config/` - Configuration files for the project setup.
+- `lib/` - Library code that can be imported and used in different parts of the application.
+- `static/styles/` - Static files for styling the application.
+- `tmp/` - Temporary files generated during development or by the build process.
+- `utils/` - Utility functions and helpers.
   - `supabase/` - Supabase-related configurations and utilities.
-    - `client.ts` - Initializes and exports the Supabase client.
-    - `middleware.ts` - Middleware for handling authentication and other server-side logic.
-    - `server.ts` - Server-side utilities for Supabase interaction.
-- `.env.local` - Environment variables for local development, including Supabase credentials (not tracked by Git).
-- `middleware.ts` - Global middleware for Next.js.
+    - `fetchCrumblCookies.ts` - Function for fetching cookies from Supabase.
+
+Additional files:
+- `app/page.tsx` - The main page component for the application.
+- `app/layout.tsx` - The layout component used in the application.
 
 ## FAQ
 
@@ -106,16 +116,11 @@ A: Protecting your privacy is our top priority. We follow best practices for dat
 
 **Q: Are there any costs associated with using Crumbl Craver?**
 
-A: Crumbl Craver is completely free to use. There are no hidden charges for accessing and using the app's features.
-
-**Q: Where can I find the terms of service and privacy policy?**
-
-A: The terms of service and privacy policy are accessible from the app's login page. We recommend reading them before creating an account.
+A: Crumbl Craver is currently completely free to use. There are no hidden charges for accessing and using the app's features.
 
 **Q: Who can I contact for more support?**
 
 A: For additional support, please email our support team at support@crumblcraver.com, and we'll be happy to assist you.
-
 
 ## Contributing
 
