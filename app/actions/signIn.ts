@@ -25,5 +25,5 @@ export default async function signIn({ email, password }: SignInData) {
   if (error) {
     return redirect('/login?message=Could not authenticate user')
   }
-  return redirect('/')
+  return redirect('/dashboard')
 }
