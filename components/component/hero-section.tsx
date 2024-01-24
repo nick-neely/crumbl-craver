@@ -2,6 +2,12 @@ import Link from 'next/link'
 import { Badge } from '../ui/badge'
 import Image from 'next/image'
 import cookieImage from '../../app/public/home-cookies.png'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
+import { CalendarIcon, GitPullRequestArrow } from 'lucide-react'
 
 export function HeroSection() {
   return (
@@ -19,9 +25,36 @@ export function HeroSection() {
                 <h1 className="text-3xl font-bold tracking-tighter text-blue-950 dark:text-white sm:text-5xl xl:text-6xl/none">
                   Crumbl Craver
                 </h1>
-                <Badge className="text-sm" variant={'outline'}>
-                  Beta
-                </Badge>
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <Badge className="text-sm" variant={'outline'}>
+                      Beta
+                    </Badge>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <div className="flex justify-between space-x-4">
+                      <GitPullRequestArrow className="h-10 w-10" />
+                      <div className="space-y-1">
+                        <Link
+                          className="text-sm font-semibold hover:underline"
+                          href="https://github.com/nick-neely/crumbl-craver"
+                          target="_blank"
+                        >
+                          GitHub
+                        </Link>
+                        <p className="text-sm">
+                          Visit the GitHub to keep up with the latest updates.
+                        </p>
+                        <div className="flex items-center pt-2">
+                          <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{' '}
+                          <span className="text-xs text-muted-foreground">
+                            In Development since January 2024
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               </div>
               <p className="max-w-[600px] md:text-xl">
                 Explore the world of delicious cookies.

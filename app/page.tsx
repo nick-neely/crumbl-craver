@@ -1,7 +1,8 @@
-import NavBar from '@/components/NavBar'
+import FaqSection from '@/components/FaqSection'
 import { FeatureList } from '@/components/component/feature-list'
 import { HeroSection } from '@/components/component/hero-section'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+
 import Link from 'next/link'
 
 export default async function Index() {
@@ -31,6 +32,10 @@ export default async function Index() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="flex w-full justify-center rounded-xl bg-slate-300 shadow-inner shadow-slate-500 dark:bg-slate-800">
+          <FaqSection />
+        </div>
 
         <footer className="flex w-full justify-center border-t border-t-foreground/5 bg-gradient-to-t from-slate-300 to-slate-100 p-8 text-center text-xs dark:bg-gradient-to-t dark:from-slate-800 dark:to-slate-600">
           <p>

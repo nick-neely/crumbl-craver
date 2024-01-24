@@ -14,12 +14,12 @@ const NavBar = () => {
           </span>
           <Link href="/">
             {/* Replace Company Name with Logo when on smaller screens */}
-            <CrumblCraverLogo className="block md:hidden" />
+            <CrumblCraverLogo className="block h-16 w-16 md:hidden" />
           </Link>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/">
-            <CrumblCraverLogo className="hidden md:block" />
+            <CrumblCraverLogo className="hidden h-16 w-16 md:block" />
           </Link>
         </div>
       </div>
