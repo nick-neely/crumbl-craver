@@ -10,8 +10,6 @@ export function HeroSection() {
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
           <Image
             src={cookieImage}
-            width={512}
-            height={512}
             alt="Delicious Cookies"
             className="mx-auto aspect-video overflow-hidden rounded-xl object-bottom sm:w-full lg:order-last lg:aspect-square"
           ></Image>
