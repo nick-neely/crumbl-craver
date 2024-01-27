@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
-import signOut from '@/app/actions/signOut'
-import getUserData from '@/app/actions/getUserData'
+import signOut from '@/app/_actions/signOut'
+import getUserData from '@/app/_actions/getUserData'
 import { Loader2 } from 'lucide-react'
 
 // Define the User interface

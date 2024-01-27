@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import signUp from '../../actions/signUp'
+import signUp from '../../_actions/signUp'
 import {
   Form,
   FormControl,

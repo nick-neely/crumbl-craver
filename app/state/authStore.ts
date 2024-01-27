@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import getUserData from '../actions/getUserData'
-import signIn from '../actions/signIn'
-import signOut from '../actions/signOut'
-import signUp from '../actions/signUp'
+import getUserData from '../_actions/getUserData'
+import signIn from '../_actions/signIn'
+import signOut from '../_actions/signOut'
+import signUp from '../_actions/signUp'
 
 interface User {
   email?: string
