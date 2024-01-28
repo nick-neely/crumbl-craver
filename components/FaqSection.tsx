@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const FaqSection = () => {
   return (
-    <section className="my-10 w-11/12 rounded-lg bg-slate-200 pt-5 dark:bg-slate-700 sm:mx-4 md:w-5/6 lg:w-2/5">
+    <section className="my-10 w-11/12 rounded-lg bg-slate-200 pt-5 dark:bg-slate-700 sm:mx-4 md:w-5/6 lg:w-3/5">
       <h2 className="mb-6 text-center text-3xl font-bold">
         Frequently Asked Questions
       </h2>
