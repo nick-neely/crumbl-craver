@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
+  applicationName: siteConfig.name,
   keywords: [
     'Crumbl Craver',
     'Cookie Flavor Updates',
@@ -35,9 +36,11 @@ export const metadata: Metadata = {
     'Automated Flavor Updates',
     'Cookie Shop Web Scraper',
   ],
+  category: 'Cookies',
   authors: [
     {
       name: 'Nick Neely',
+      url: 'https://nickneely.dev',
     },
   ],
   creator: 'Nick Neely',
