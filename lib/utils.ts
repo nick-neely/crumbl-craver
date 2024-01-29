@@ -24,15 +24,16 @@ export function formatPhoneNumber(value: string): string {
   return value
 }
 
-/**
- * Returns the current week number of the year.
- * @returns {number} The current week number.
- */
 export function getCurrentWeek() {
-  const now = new Date() // get current date
-  const start = new Date(now.getFullYear(), 0, 1) // First day of year
-  const diff = now.getTime() - start.getTime() // difference in milliseconds
-  const oneDay = 1000 * 60 * 60 * 24 // milliseconds in a day
-  const day = Math.floor(diff / oneDay) // get number of days since year started
-  return Math.ceil(day / 7) // get number of weeks since year started
+  const now = new Date()
+  const startOfYear = new Date(now.getFullYear(), 0, 1)
+  const startDay = startOfYear.getDay() || 7 // Get the day of the week with Monday as 1 and Sunday as 7
+  if (startDay !== 1) {
+    startOfYear.setHours(-24 * (startDay - 1)) // Adjust to the previous Monday if Jan 1st isn't a Monday
+  }
+  const currentWeek = Math.ceil(
+    ((now.valueOf() - startOfYear.valueOf()) / (24 * 3600 * 1000) + 1) / 7
+  )
+  const year = now.getFullYear()
+  return `cookies-week:${year}-W${currentWeek}`
 }

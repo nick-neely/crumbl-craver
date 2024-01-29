@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import Redis from 'ioredis'
 import { log } from 'next-axiom'
 import { getCurrentWeek } from '../../../lib/utils'
+import { get } from 'http'
 
 // Initialize Redis client
 const redisUrl = process.env.UPSTASH_REDIS_URL
@@ -46,7 +47,7 @@ async function fetchDataFromSupabase() {
  * @returns A Promise that resolves to a Response object containing the cookies data or error message.
  */
 export async function GET(req: Request) {
-  const cacheKey = `cookies-week:${getCurrentWeek()}`
+  const cacheKey = getCurrentWeek()
 
   try {
     // Check cache

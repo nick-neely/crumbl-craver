@@ -54,8 +54,9 @@ async function uploadImageToSupabase(filePath: string) {
  * @param req - The NextRequest object representing the incoming request.
  * @returns A Response object with the updated cookies data or an error message.
  */
-export async function POST(req: NextRequest) {
-  if (req.headers.get('Authorization') !== `Bearer ${SECRET_KEY}`) {
+export async function GET(req: NextRequest) {
+  const authHeader = req.headers.get('authorization')
+  if (authHeader !== `Bearer ${SECRET_KEY}`) {
     return new Response('Unauthorized', { status: 401 })
   }
 
@@ -110,7 +111,7 @@ export async function POST(req: NextRequest) {
     }
 
     // After successful upsert operations, clear the Redis cache
-    const cacheKey = `cookies-week:${getCurrentWeek()}`
+    const cacheKey = getCurrentWeek()
     console.log('Clearing cache:', cacheKey)
     await redis.del(cacheKey)
 
