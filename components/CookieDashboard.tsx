@@ -50,7 +50,7 @@ export default function CookieDashboard() {
         <div className="flex w-full items-center justify-between">
           <div>
             <CardTitle className="text-4xl font-bold">Weekly Menu</CardTitle>
-            <CardDescription>1/22/24 - 1/27/24</CardDescription>
+            <CardDescription>3/11/24 - 3/16/24</CardDescription>
           </div>
         </div>
       </CardHeader>

@@ -1,10 +1,10 @@
-import type { NextRequest } from 'next/server'
 import fetchCrumblCookies from '@/utils/fetchCrumblCookies'
 import { supabaseAdmin } from '@/utils/supabase/admin'
-import { getCurrentWeek } from '../../../lib/utils'
-import Redis from 'ioredis'
 import fs from 'fs'
+import Redis from 'ioredis'
+import type { NextRequest } from 'next/server'
 import path from 'path'
+import { getCurrentWeek } from '../../../lib/utils'
 
 const SECRET_KEY = process.env.CRON_SECRET
 
