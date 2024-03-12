@@ -6,14 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { CookieCard } from '../components/CookieCard'
 import { Separator } from '@/components/ui/separator'
-import { Button } from './ui/button'
 import { RefreshCcw } from 'lucide-react'
-import useSWR from 'swr'
 import { useState } from 'react'
+import useSWR from 'swr'
+import { CookieCard } from '../components/CookieCard'
 import CookiesLoading from './CookiesLoading'
 import ErrorComponent from './ErrorComponent'
+import { Button } from './ui/button'
 
 interface CookieType {
   id: string
@@ -34,6 +34,12 @@ export default function CookieDashboard() {
   if (error) return <ErrorComponent error={error} reset={mutate} />
   if (!data) return <CookiesLoading />
 
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+
   // data should be an array of cookies
   const cookies: CookieType[] = data || []
 
@@ -50,7 +56,7 @@ export default function CookieDashboard() {
         <div className="flex w-full items-center justify-between">
           <div>
             <CardTitle className="text-4xl font-bold">Weekly Menu</CardTitle>
-            <CardDescription>3/11/24 - 3/16/24</CardDescription>
+            <CardDescription>{currentDate}</CardDescription>
           </div>
         </div>
       </CardHeader>
